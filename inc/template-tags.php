@@ -25,24 +25,6 @@ function ses_get_copyright_text() {
 }
 
 /**
- * Fuente única de los 4 grupos de práctica (título, título corto, URL,
- * ícono y sub-especialidades), consumida por mega-menu.php y
- * footer-content.php.
- *
- * `title` es el nombre completo (mega menú); `short` es la variante
- * abreviada que usa el footer en el diseño aprobado (prototipo/index.html
- * — p.ej. "Público y Corporativo" en vez de "Derecho Público y
- * Corporativo", para cada columna del footer no se vuelva demasiado
- * ancha/alta). Mismo dato, dos formatos de un mismo campo, no dos copias
- * independientes que se puedan desincronizar.
- *
- * Hardcodeado a propósito (puente temporal hasta Sprint 6, cuando estos
- * datos vengan de las 4 páginas de grupo + ACF `sub_especialidades` —
- * docs/wordpress.md §4). Antes vivía duplicado en dos arrays distintos
- * (uno por template-part); ahora es un solo lugar que editar si cambia
- * una etiqueta o URL antes de que exista la versión dinámica.
- */
-/**
  * Container — docs/biblioteca_componentes.md §1.
  *
  * Container/Section envuelven contenido arbitrario que get_template_part
@@ -78,6 +60,24 @@ function ses_section_class( $background = 'white' ) {
 	return isset( $map[ $background ] ) ? $map[ $background ] : $map['white'];
 }
 
+/**
+ * Fuente única de los 4 grupos de práctica (título, título corto, URL,
+ * ícono y sub-especialidades), consumida por mega-menu.php y
+ * footer-content.php.
+ *
+ * `title` es el nombre completo (mega menú); `short` es la variante
+ * abreviada que usa el footer en el diseño aprobado (prototipo/index.html
+ * — p.ej. "Público y Corporativo" en vez de "Derecho Público y
+ * Corporativo", para cada columna del footer no se vuelva demasiado
+ * ancha/alta). Mismo dato, dos formatos de un mismo campo, no dos copias
+ * independientes que se puedan desincronizar.
+ *
+ * Hardcodeado a propósito (puente temporal hasta Sprint 6, cuando estos
+ * datos vengan de las 4 páginas de grupo + ACF `sub_especialidades` —
+ * docs/wordpress.md §4). Antes vivía duplicado en dos arrays distintos
+ * (uno por template-part); ahora es un solo lugar que editar si cambia
+ * una etiqueta o URL antes de que exista la versión dinámica.
+ */
 function ses_get_grupos_practica() {
 	$areas_base = home_url( '/areas-de-practica' );
 
