@@ -58,7 +58,7 @@ function ses_setup() {
 	 * en vez de los de marca mientras el cliente edita contenido.
 	 */
 	add_theme_support( 'editor-styles' );
-	add_editor_style( 'assets/css/style.css' );
+	add_editor_style( array( 'assets/css/design-system.css', 'assets/css/style.css' ) );
 
 	/*
 	 * Ubicaciones de menú (docs/wordpress.md §4) — el contenido de cada

@@ -44,9 +44,16 @@ function ses_enqueue_assets() {
 	);
 
 	wp_enqueue_style(
+		'ses-design-system',
+		SES_THEME_URI . '/assets/css/design-system.css',
+		array( 'ses-google-fonts' ),
+		SES_THEME_VERSION
+	);
+
+	wp_enqueue_style(
 		'ses-abogados-style',
 		SES_THEME_URI . '/assets/css/style.css',
-		array( 'ses-google-fonts' ),
+		array( 'ses-design-system' ),
 		SES_THEME_VERSION
 	);
 

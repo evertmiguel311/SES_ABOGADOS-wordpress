@@ -1,0 +1,213 @@
+/* ==========================================================================
+   SES Abogados — Sistema de Diseño (Sprint 2)
+
+   Este archivo NO redefine nada que ya exista y esté aprobado en
+   assets/css/style.css (sección ":root" al inicio del archivo): colores,
+   sombras, radios, curvas de animación, tipografías de marca, botones
+   (.btn/.btn-solid-light/.btn-outline/.btn-outline-dark) y animaciones de
+   entrada (.reveal/.reveal-zoom) ya viven ahí y siguen siendo la única
+   fuente de verdad — este archivo solo añade lo que faltaba para que el
+   sistema quede completo y reutilizable en cualquier página futura:
+   escala de espaciado y tipografía como variables de uso libre, grid/
+   contenedor, formularios genéricos y utilidades.
+
+   Se carga antes que style.css (ver inc/enqueue.php) — es la base sobre
+   la que se apoyan los estilos de cada componente.
+
+   @package SES_Abogados
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     Espaciado — misma escala que theme.json settings.spacing.spacingSizes,
+     expuesta aquí para usarla en CSS/HTML escrito a mano fuera del editor
+     de bloques. Un solo valor que cambiar en ambos lugares si el diseño
+     ajusta la escala (CLAUDE.md §5, no duplicar tokens).
+     ------------------------------------------------------------------------ */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+  --space-9: 128px;
+
+  /* ------------------------------------------------------------------------
+     Tipografía — misma escala que theme.json settings.typography.fontSizes.
+     ------------------------------------------------------------------------ */
+  --text-small: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);    /* eyebrow/meta, 12–13px */
+  --text-medium: 1rem;                                          /* cuerpo de texto, 16px */
+  --text-large: clamp(1.0625rem, 1rem + 0.2vw, 1.125rem);       /* lead, 17–18px */
+  --text-x-large: clamp(1.1875rem, 1.1rem + 0.3vw, 1.375rem);   /* h3, 19–22px */
+  --text-xx-large: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);         /* h2, 24–32px */
+  --text-huge: clamp(1.875rem, 1.6rem + 1.2vw, 2.625rem);       /* h1 interior, 30–42px */
+  --text-display: clamp(2.125rem, 1.6rem + 2.2vw, 3.5rem);      /* display/hero h1, 34–56px */
+
+  /* ------------------------------------------------------------------------
+     Contenedores — mismos anchos que theme.json settings.layout.
+     ------------------------------------------------------------------------ */
+  --container-width: 1280px;
+  --container-width-wide: 1440px;
+}
+
+/* ==========================================================================
+   Breakpoints
+
+   CSS no permite variables dentro de una condición @media sin un
+   preprocesador, y el proyecto no usa build step (CLAUDE.md §4) — quedan
+   documentados aquí como referencia única en vez de repetidos como
+   "número mágico" en cada archivo:
+
+     - Base (mobile): sin media query, estilos por defecto.
+     - Tablet:  @media (min-width: 768px)
+     - Desktop: @media (min-width: 1024px)
+
+   Son los únicos dos puntos de corte usados en todo el proyecto; una
+   media query nueva debe reutilizar uno de estos valores, no inventar un
+   tercero. El punto de corte de escritorio está espejado en JS como
+   `DESKTOP_MIN_WIDTH = 1024` (assets/js/main.js) — si cambia, cambiarlo
+   en los dos lugares.
+   ========================================================================== */
+
+/* ==========================================================================
+   Grid / Contenedor
+
+   Antes de este archivo cada sección repetía a mano "max-width: 1280px;
+   margin: 0 auto" (Hero, Áreas de práctica, Firma, Equipo, Actualidad
+   Jurídica, CTA contacto, Footer — ver style.css). Estas clases lo
+   formalizan para código nuevo; no se tocó ninguna regla existente.
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--space-inline);
+}
+.container-wide {
+  width: 100%;
+  max-width: var(--container-width-wide);
+  margin-inline: auto;
+  padding-inline: var(--space-inline);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1023px) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 767px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Formularios — base genérica y reutilizable
+
+   El único formulario real hoy (Contacto) usa clases propias con este
+   mismo tratamiento visual (.contact-form input/select/textarea, ver
+   style.css sección "Contacto") — esta base generaliza ese mismo
+   tratamiento para cualquier formulario futuro (newsletter, búsqueda,
+   filtros) sin duplicarlo: son los mismos valores, así que donde ya
+   existe .contact-form no cambia nada (misma especificidad, misma regla).
+   ========================================================================== */
+
+label {
+  display: block;
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-texto-secundario);
+  margin-bottom: 8px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--color-placeholder-borde-claro);
+  background: var(--color-blanco);
+  padding: 13px 14px;
+  font-size: 14.5px;
+  color: var(--color-azul-oscuro);
+  font-family: var(--font-texto);
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.3s var(--ease-suave);
+}
+input:hover,
+select:hover,
+textarea:hover { border-color: var(--color-acero); }
+input:focus,
+select:focus,
+textarea:focus,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--color-azul);
+  box-shadow: 0 0 0 3px rgba(20, 55, 92, 0.12);
+}
+textarea { resize: vertical; min-height: 120px; }
+
+.form-group { margin-bottom: var(--space-4); }
+
+/*
+ * Estado de error de campo: pendiente a propósito. La paleta aprobada
+ * (style.css :root) no tiene un color de error/peligro — inventar uno
+ * ahora sería una decisión de diseño no autorizada. Se define junto con
+ * la validación real del formulario de Contacto (Sprint 8), con el color
+ * que indique el manual de marca en ese momento.
+ */
+
+/* ==========================================================================
+   Utilidades
+
+   Clases pequeñas de un solo propósito. Antes de usar una, revisar que no
+   exista ya una regla más específica para ese componente — estas son para
+   ajustes puntuales, no para reconstruir un componente a fuerza de
+   utilidades (CLAUDE.md §5, no sobre-ingeniería).
+   ========================================================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Márgenes/rellenos verticales — mismo criterio que --space-*. */
+.mt-1 { margin-top: var(--space-1); } .mb-1 { margin-bottom: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); } .mb-2 { margin-bottom: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); } .mb-3 { margin-bottom: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); } .mb-4 { margin-bottom: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); } .mb-5 { margin-bottom: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); } .mb-6 { margin-bottom: var(--space-6); }
+.mt-7 { margin-top: var(--space-7); } .mb-7 { margin-bottom: var(--space-7); }
+.mt-8 { margin-top: var(--space-8); } .mb-8 { margin-bottom: var(--space-8); }
+.mt-9 { margin-top: var(--space-9); } .mb-9 { margin-bottom: var(--space-9); }
+.mt-0 { margin-top: 0; } .mb-0 { margin-bottom: 0; }
+
+.pt-1 { padding-top: var(--space-1); } .pb-1 { padding-bottom: var(--space-1); }
+.pt-2 { padding-top: var(--space-2); } .pb-2 { padding-bottom: var(--space-2); }
+.pt-3 { padding-top: var(--space-3); } .pb-3 { padding-bottom: var(--space-3); }
+.pt-4 { padding-top: var(--space-4); } .pb-4 { padding-bottom: var(--space-4); }
+.pt-5 { padding-top: var(--space-5); } .pb-5 { padding-bottom: var(--space-5); }
+.pt-6 { padding-top: var(--space-6); } .pb-6 { padding-bottom: var(--space-6); }
+.pt-7 { padding-top: var(--space-7); } .pb-7 { padding-bottom: var(--space-7); }
+.pt-8 { padding-top: var(--space-8); } .pb-8 { padding-bottom: var(--space-8); }
+.pt-9 { padding-top: var(--space-9); } .pb-9 { padding-bottom: var(--space-9); }

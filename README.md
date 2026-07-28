@@ -26,12 +26,14 @@ Copiar el contenido de este repositorio en `wp-content/themes/ses-abogados/` de 
 ## Estructura
 
 ```
-assets/                     CSS, JS, fuentes e imágenes
-inc/                         Lógica organizada por responsabilidad (setup, enqueue, CPT, taxonomías, widgets, ACF, seguridad)
-template-parts/components/  Partials reutilizables (navbar, footer, mega menú, etc.)
-acf-json/                    Grupos de campos de ACF versionados como JSON
-languages/                   Traducciones (.pot/.po/.mo) — vacía hasta que exista un segundo idioma
-theme.json                   Paleta, tipografía, espaciado y ajustes del editor de bloques
+assets/css/design-system.css  Sistema de diseño: espaciado, tipografía, grid, formularios y utilidades reutilizables
+assets/css/style.css          Tokens de marca (colores, sombras, radios, animaciones) + estilos por componente
+assets/                       CSS, JS, fuentes e imágenes
+inc/                          Lógica organizada por responsabilidad (setup, enqueue, CPT, taxonomías, widgets, ACF, seguridad)
+template-parts/components/   Partials reutilizables (navbar, footer, mega menú, etc.)
+acf-json/                     Grupos de campos de ACF versionados como JSON
+languages/                    Traducciones (.pot/.po/.mo) — vacía hasta que exista un segundo idioma
+theme.json                    Paleta, tipografía, espaciado y ajustes del editor de bloques
 ```
 
 ## Calidad de código
