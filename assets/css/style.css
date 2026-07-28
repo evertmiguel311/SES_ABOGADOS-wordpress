@@ -285,6 +285,32 @@ h1, h2, h3 {
   border-color: var(--color-azul-oscuro);
 }
 
+/* Modificadores de tamaño/ancho para el componente Button
+   (docs/biblioteca_componentes.md §6) — .btn-compact reutiliza las
+   mismas métricas ya aprobadas de .btn-outline (9px/18px, 12px), no
+   valores nuevos. */
+.btn-compact { padding: 9px 18px; font-size: 12px; }
+@media (max-width: 767px) {
+  .btn-full-mobile { display: block; width: 100%; text-align: center; }
+}
+
+/* Badge — docs/biblioteca_componentes.md §6, etiqueta corta no
+   interactiva. Reutiliza tokens ya existentes, ninguno nuevo. */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: var(--radio-caja);
+  background: var(--color-niebla-azul);
+  color: var(--color-texto-secundario);
+}
+.badge-accent {
+  background: var(--color-azul-oscuro);
+  color: var(--color-dorado-claro);
+}
+
 /* Bloques de foto placeholder (pendiente sesión fotográfica real, ver manual_marca.md) */
 .placeholder-block {
   display: flex;
@@ -852,6 +878,22 @@ h1, h2, h3 {
 }
 @media (min-width: 1024px) {
   .section-alt { padding-top: 110px; padding-bottom: 110px; }
+}
+
+/* Variante fría de .section-alt para el componente Section
+   (docs/biblioteca_componentes.md §1, ses_section_class('niebla') en
+   inc/template-tags.php) — mismo patrón, --color-niebla-azul en vez de
+   crema. No sustituye el pseudo-elemento de #equipo (deuda ya aprobada,
+   no se toca); es la versión reutilizable para código nuevo. */
+.section-niebla {
+  background: var(--color-niebla-azul);
+  padding: 64px var(--space-inline);
+}
+@media (min-width: 768px) {
+  .section-niebla { padding-top: 80px; padding-bottom: 80px; }
+}
+@media (min-width: 1024px) {
+  .section-niebla { padding-top: 110px; padding-bottom: 110px; }
 }
 
 /* Bandas de color entre secciones: alterna blanco / crema (cálido) / niebla

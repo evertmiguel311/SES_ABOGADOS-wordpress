@@ -42,6 +42,42 @@ function ses_get_copyright_text() {
  * (uno por template-part); ahora es un solo lugar que editar si cambia
  * una etiqueta o URL antes de que exista la versión dinámica.
  */
+/**
+ * Container — docs/biblioteca_componentes.md §1.
+ *
+ * Container/Section envuelven contenido arbitrario que get_template_part
+ * no puede recibir como "hijo" (no hay slots/children en PHP clásico) —
+ * por eso viven como helpers de clase, no como archivo con markup; el
+ * llamador sigue escribiendo su propio <div>/<section> y solo pide aquí
+ * el nombre de clase correcto. Evita repetir "container-wide" a mano y
+ * un futuro tercer ancho solo se cambia aquí.
+ *
+ * @param bool $wide true → docs/design_system.md ancho ampliado (1440px).
+ */
+function ses_container_class( $wide = false ) {
+	return $wide ? 'container-wide' : 'container';
+}
+
+/**
+ * Section — docs/biblioteca_componentes.md §1.
+ *
+ * `background = 'grafito'` (fondo oscuro genérico) queda sin implementar:
+ * hoy todo fondo oscuro del sitio es Hero o Footer, ambos componentes
+ * bespoke con su propio forzado de color — ningún contenido real necesita
+ * todavía una Section oscura genérica. Se agrega cuando exista ese caso
+ * de uso real, no antes (CLAUDE.md §5, no sobre-ingeniería).
+ *
+ * @param string $background 'white' (default) | 'crema' | 'niebla'.
+ */
+function ses_section_class( $background = 'white' ) {
+	$map = array(
+		'white'  => 'section',
+		'crema'  => 'section-alt',
+		'niebla' => 'section-niebla',
+	);
+	return isset( $map[ $background ] ) ? $map[ $background ] : $map['white'];
+}
+
 function ses_get_grupos_practica() {
 	$areas_base = home_url( '/areas-de-practica' );
 

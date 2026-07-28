@@ -6,10 +6,16 @@
  * consistente del sistema a cualquier bloque de contenido. No tiene
  * opinión sobre lo que envuelve.
  *
- * Pendiente de implementación — se agrega junto con la primera plantilla
- * que lo consuma (Sprint 4 en adelante, docs/roadmap.md). Este archivo
- * reserva la ubicación del partial para que, al construirse, no quede
- * duplicado entre plantillas (CLAUDE.md §5).
+ * Implementado como helper de clase, `ses_container_class()`
+ * (inc/template-tags.php), no como archivo con markup: Container envuelve
+ * contenido arbitrario y get_template_part no tiene forma de recibir ese
+ * contenido como "hijo" en PHP clásico. El llamador escribe su propio
+ * `<div>`/`<section>` y pide aquí solo el nombre de clase:
+ *
+ *   <div class="<?php echo esc_attr( ses_container_class() ); ?>">…</div>
+ *
+ * CSS ya existente y sin cambios: .container / .container-wide
+ * (assets/css/design-system.css).
  *
  * @package SES_Abogados
  */
