@@ -1,0 +1,14 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Entorno / credenciales
+.env
+wp-config.php
+
+# Dependencias / build
+node_modules/
+vendor/
+dist/
+build/

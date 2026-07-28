@@ -1,0 +1,23 @@
+/*
+Theme Name: SES Abogados
+Theme URI: https://sesabogados.com.co
+Author: EIA Softworks
+Author URI: https://evertmiguel311.github.io/EIA-SOFTWORKS/
+Description: Tema WordPress a medida para Sierra Elles & Salgado Abogados S.A.S. (SES Abogados), firma jurídica full-service con sede en Cartagena y cobertura nacional. Tema tradicional (no headless), pensado para autogestión de contenido vía Gutenberg. Documentación completa de producto en el repositorio privado del proyecto.
+Version: 0.1.0
+Requires at least: 6.4
+Requires PHP: 8.0
+Tested up to: 6.6
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ses-abogados
+*/
+
+/*
+ * Este archivo existe únicamente porque WordPress lo exige (cabecera de
+ * metadatos) para reconocer y listar el tema. No contiene reglas de
+ * estilo: la hoja de estilos real vive en assets/css/style.css y se
+ * carga desde functions.php (vía inc/enqueue.php), separada por carpetas
+ * como pide la organización del proyecto (assets/css, assets/js,
+ * assets/fonts, assets/images).
+ */

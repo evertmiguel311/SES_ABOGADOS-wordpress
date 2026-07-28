@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": false,
+    "color": {
+      "custom": false,
+      "customGradient": false,
+      "customDuotone": false,
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "defaultDuotone": false,
+      "palette": [
+        { "slug": "azul-oscuro", "color": "#081D2E", "name": "Azul institucional oscuro" },
+        { "slug": "azul", "color": "#0F2C45", "name": "Azul institucional" },
+        { "slug": "azul-claro", "color": "#153A5C", "name": "Azul institucional claro" },
+        { "slug": "acero", "color": "#97A3B4", "name": "Acero" },
+        { "slug": "blanco", "color": "#FFFFFF", "name": "Blanco" },
+        { "slug": "crema", "color": "#F4F1EB", "name": "Crema" },
+        { "slug": "niebla-azul", "color": "#F1F4F6", "name": "Niebla azulada" },
+        { "slug": "dorado", "color": "#B0812F", "name": "Dorado" },
+        { "slug": "dorado-texto", "color": "#9E7328", "name": "Dorado (texto)" },
+        { "slug": "dorado-claro", "color": "#D6A75B", "name": "Dorado (sobre oscuro)" }
+      ]
+    },
+    "typography": {
+      "customFontSize": false,
+      "dropCap": false,
+      "fontStyle": true,
+      "fontWeight": true,
+      "lineHeight": true,
+      "fontFamilies": [
+        {
+          "slug": "titulos",
+          "fontFamily": "'Cormorant Garamond', serif",
+          "name": "Cormorant Garamond (títulos)"
+        },
+        {
+          "slug": "texto",
+          "fontFamily": "'Inter', sans-serif",
+          "name": "Inter (texto de lectura)"
+        }
+      ],
+      "fontSizes": [
+        { "slug": "small", "size": "clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem)", "name": "Pequeño (eyebrow/meta, 12–13px)" },
+        { "slug": "medium", "size": "1rem", "name": "Base (cuerpo de texto, 16px)" },
+        { "slug": "large", "size": "clamp(1.0625rem, 1rem + 0.2vw, 1.125rem)", "name": "Lead (17–18px)" },
+        { "slug": "x-large", "size": "clamp(1.1875rem, 1.1rem + 0.3vw, 1.375rem)", "name": "H3 (19–22px)" },
+        { "slug": "xx-large", "size": "clamp(1.5rem, 1.3rem + 0.8vw, 2rem)", "name": "H2 (24–32px)" },
+        { "slug": "huge", "size": "clamp(1.875rem, 1.6rem + 1.2vw, 2.625rem)", "name": "H1 interior (30–42px)" },
+        { "slug": "display", "size": "clamp(2.125rem, 1.6rem + 2.2vw, 3.5rem)", "name": "Display / Hero H1 (34–56px)" }
+      ]
+    },
+    "spacing": {
+      "customSpacingSize": false,
+      "units": [ "px", "%", "vw", "em", "rem" ],
+      "spacingSizes": [
+        { "slug": "1", "size": "4px", "name": "space-1" },
+        { "slug": "2", "size": "8px", "name": "space-2" },
+        { "slug": "3", "size": "16px", "name": "space-3" },
+        { "slug": "4", "size": "24px", "name": "space-4" },
+        { "slug": "5", "size": "32px", "name": "space-5" },
+        { "slug": "6", "size": "48px", "name": "space-6" },
+        { "slug": "7", "size": "64px", "name": "space-7" },
+        { "slug": "8", "size": "96px", "name": "space-8" },
+        { "slug": "9", "size": "128px", "name": "space-9" }
+      ]
+    },
+    "border": {
+      "radius": false,
+      "color": false,
+      "style": false,
+      "width": false
+    },
+    "layout": {
+      "contentSize": "1280px",
+      "wideSize": "1440px"
+    },
+    "custom": {
+      "radio": {
+        "img": "4px",
+        "caja": "4px"
+      },
+      "shadow": {
+        "sm": "0 2px 8px rgba(8, 29, 46, 0.08)",
+        "md": "0 12px 28px rgba(8, 29, 46, 0.15)",
+        "lg": "0 22px 46px rgba(8, 29, 46, 0.22)",
+        "foto": "0 18px 40px rgba(8, 29, 46, 0.22)",
+        "fotoHover": "0 30px 60px rgba(8, 29, 46, 0.32)"
+      },
+      "ease": {
+        "suave": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+        "salida": "cubic-bezier(0.16, 1, 0.3, 1)"
+      }
+    }
+  }
+}
