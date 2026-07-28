@@ -50,6 +50,17 @@
      ------------------------------------------------------------------------ */
   --container-width: 1280px;
   --container-width-wide: 1440px;
+
+  /* ------------------------------------------------------------------------
+     Duración — escala mínima de 3 pasos, derivada de los tiempos que ya
+     están en uso en style.css (0.2–0.3s para feedback de interacción,
+     0.4–0.45s para movimiento más marcado). No sustituye lo ya existente
+     ahí (CLAUDE.md §5, no tocar componentes aprobados); es la versión con
+     nombre para código nuevo del Sprint 3 en adelante.
+     ------------------------------------------------------------------------ */
+  --transition-fast: 180ms;  /* toggles casi instantáneos: abrir/cerrar panel, chevron */
+  --transition-base: 300ms;  /* feedback estándar: color, borde, sombra en hover/foco */
+  --transition-slow: 450ms;  /* movimiento marcado: elevar tarjeta, escalar foto/ícono */
 }
 
 /* ==========================================================================
@@ -69,6 +80,35 @@
    tercero. El punto de corte de escritorio está espejado en JS como
    `DESKTOP_MIN_WIDTH = 1024` (assets/js/main.js) — si cambia, cambiarlo
    en los dos lugares.
+   ========================================================================== */
+
+/* ==========================================================================
+   Sistema de Interacción — principios
+
+   1. Movimiento con propósito: toda transición comunica un estado (hover,
+      foco, cambio); nunca decora sin razón.
+   2. Feedback sutil: el usuario nota que algo respondió, no que "hubo una
+      animación". Si el efecto se nota antes que el resultado, sobra.
+   3. Mínima distracción: nada se mueve por sí solo salvo lo que ya existe
+      (.reveal al entrar en viewport); todo lo demás reacciona a una
+      acción del usuario, nunca es ambiental.
+   4. Estabilidad: elementos estructurales (header, navegación) no
+      desaparecen ni se reordenan al hacer scroll — firma jurídica
+      corporativa, no app de consumo.
+   5. Un solo lenguaje de curvas y tiempos en todo el sitio — nunca una
+      curva o duración nueva "porque este componente lo pide".
+
+   Curvas oficiales — ya definidas en style.css :root, no se duplican aquí:
+     --ease-suave  (cubic-bezier(0.22, 0.61, 0.36, 1)) → color, fondo,
+       borde, sombra: transiciones "de estado", sin desplazamiento.
+     --ease-salida (cubic-bezier(0.16, 1, 0.3, 1))      → transform
+       (mover/escalar/rotar): con desaceleración marcada al final, la
+       única curva para movimiento.
+   Ninguna otra curva (ease, linear, ease-in-out genérico) es parte del
+   sistema. Los usos sueltos de "ease" sin variable que quedan en
+   style.css (paneles de dropdown/mega-menu y algunos hover del
+   prototipo) son deuda heredada, no un tercer estándar — no se tocan por
+   ser componentes ya aprobados, pero no se replican en código nuevo.
    ========================================================================== */
 
 /* ==========================================================================
@@ -158,6 +198,43 @@ textarea:focus-visible {
 }
 textarea { resize: vertical; min-height: 120px; }
 
+/*
+ * Checkbox / radio: control nativo del navegador con `accent-color`, no
+ * una reconstrucción con divs — mismo nivel de accesibilidad que un
+ * checkbox nativo (teclado, lector de pantalla) sin código extra, y ya
+ * hereda el foco visible global (style.css :focus-visible). Resetea lo
+ * heredado de la regla `input` genérica de arriba (width/border/padding
+ * están pensados para campos de texto, no para esto).
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  accent-color: var(--color-azul);
+  cursor: pointer;
+  transition: transform var(--transition-fast) var(--ease-salida);
+}
+input[type="checkbox"]:active,
+input[type="radio"]:active { transform: scale(0.92); }
+
+/* Fila checkbox/radio + texto — el <label> genérico de arriba es para
+   etiquetas de campo (mayúsculas, espaciado); el texto de un checkbox
+   (p. ej. consentimiento) se lee mejor en formato normal de oración. */
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.form-check label {
+  display: inline;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: var(--text-small);
+  margin-bottom: 0;
+}
+
 .form-group { margin-bottom: var(--space-4); }
 
 /*
@@ -167,6 +244,55 @@ textarea { resize: vertical; min-height: 120px; }
  * la validación real del formulario de Contacto (Sprint 8), con el color
  * que indique el manual de marca en ese momento.
  */
+
+/* ==========================================================================
+   Interacción — hover, elevación, presionado, deshabilitado
+
+   Reglas generales reutilizables para Sprint 3 en adelante, no una por
+   componente: cualquier tarjeta/botón/enlace-tarjeta usa .hover-lift;
+   cualquier imagen/ícono interactivo usa .hover-scale. El foco visible ya
+   es global (style.css :focus-visible) — no se repite aquí.
+
+   Elevación (shadow-*, ya existentes en style.css :root): --shadow-sm es
+   el reposo de superficies pequeñas (campos, badges); --shadow-md el
+   reposo de tarjetas; --shadow-lg el hover de botones/tarjetas/paneles;
+   --shadow-foto/--shadow-foto-hover son exclusivos de fotografía. La
+   elevación solo cambia en hover/foco de un elemento interactivo — nunca
+   en contenido estático, texto plano ni elementos deshabilitados.
+   ========================================================================== */
+
+.hover-lift {
+  transition: transform var(--transition-base) var(--ease-salida),
+              box-shadow var(--transition-base) var(--ease-salida);
+}
+.hover-lift:hover,
+.hover-lift:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+.hover-lift:active { transform: translateY(-1px) scale(0.985); }
+
+.hover-scale {
+  transition: transform var(--transition-slow) var(--ease-salida);
+}
+.hover-scale:hover,
+.hover-scale:focus-visible { transform: scale(1.03); }
+
+/* Deshabilitado — mismo criterio para cualquier control de formulario o botón. */
+[disabled],
+.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Envío de formulario en curso — mismo criterio que "deshabilitado",
+   sin color nuevo; evita doble envío mientras no hay respuesta del servidor. */
+.is-loading {
+  opacity: 0.6;
+  cursor: wait;
+  pointer-events: none;
+}
 
 /* ==========================================================================
    Utilidades
