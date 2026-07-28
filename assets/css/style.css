@@ -1661,7 +1661,10 @@ a:focus-visible .stock-photo,
 .contact-form select,
 .contact-form textarea {
   width: 100%;
-  border: 1px solid var(--color-placeholder-borde-claro);
+  /* Dorado institucional en reposo: el borde anterior (placeholder-borde-claro)
+     no alcanzaba el contraste mínimo WCAG AA (1.4.11, 3:1) contra fondo
+     blanco — decisión de cliente 2026-07-28, ver manual_marca.md. */
+  border: 1px solid var(--color-dorado);
   background: var(--color-blanco);
   padding: 13px 14px;
   font-size: 14.5px;
