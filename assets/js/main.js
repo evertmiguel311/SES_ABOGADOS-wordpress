@@ -214,5 +214,52 @@
 				revealEls.forEach( function ( el ) { el.classList.add( 'is-visible' ); } );
 			}
 		}
+
+		// Carrusel de Testimonios: scroll nativo con snap; los botones/puntos
+		// son una capa de conveniencia sobre el scroll táctil, que sigue
+		// funcionando aunque JS no cargue (progressive enhancement).
+		var testimoniosTrack = document.querySelector( '.testimonios-track' );
+		if ( testimoniosTrack ) {
+			var testimonioCards = Array.prototype.slice.call( testimoniosTrack.querySelectorAll( '.testimonio-card' ) );
+			var dotsWrap = document.querySelector( '.testimonios-dots' );
+			var dots = [];
+
+			testimonioCards.forEach( function ( card, i ) {
+				var dot = document.createElement( 'button' );
+				dot.type = 'button';
+				dot.className = 'testimonio-dot';
+				dot.setAttribute( 'aria-label', 'Ir al testimonio ' + ( i + 1 ) );
+				dot.addEventListener( 'click', function () {
+					card.scrollIntoView( { behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'start' } );
+				} );
+				dotsWrap.appendChild( dot );
+				dots.push( dot );
+			} );
+
+			function scrollByOneCard( direction ) {
+				var card = testimonioCards[ 0 ];
+				var gap = 24;
+				var amount = ( card.getBoundingClientRect().width + gap ) * direction;
+				testimoniosTrack.scrollBy( { left: amount, behavior: prefersReducedMotion ? 'auto' : 'smooth' } );
+			}
+
+			var prevBtn = document.querySelector( '.testimonio-prev' );
+			var nextBtn = document.querySelector( '.testimonio-next' );
+			if ( prevBtn ) prevBtn.addEventListener( 'click', function () { scrollByOneCard( -1 ); } );
+			if ( nextBtn ) nextBtn.addEventListener( 'click', function () { scrollByOneCard( 1 ); } );
+
+			if ( 'IntersectionObserver' in window ) {
+				var dotsObserver = new IntersectionObserver( function ( entries ) {
+					entries.forEach( function ( entry ) {
+						var index = testimonioCards.indexOf( entry.target );
+						if ( index === -1 ) return;
+						dots[ index ].classList.toggle( 'is-active', entry.isIntersecting );
+					} );
+				}, { root: testimoniosTrack, threshold: 0.6 } );
+				testimonioCards.forEach( function ( card ) { dotsObserver.observe( card ); } );
+			} else if ( dots[ 0 ] ) {
+				dots[ 0 ].classList.add( 'is-active' );
+			}
+		}
 	} );
 } )();

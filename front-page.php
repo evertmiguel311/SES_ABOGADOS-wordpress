@@ -28,6 +28,11 @@ get_header();
 			the_post();
 			the_content();
 		endwhile;
+
+		// Testimonios: propuesta aprobada por el cliente el 2026-07-28 (ver
+		// SES_ABOGADOS-sitio/prototipo). No imprime nada si el CPT
+		// ses_testimonio todavía no tiene entradas publicadas.
+		get_template_part( 'template-parts/components/testimonios-section' );
 		?>
 	</main>
 

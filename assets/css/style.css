@@ -21,7 +21,7 @@
   --color-azul-noche: #04121D;    /* extremo profundo: base del pie de página */
   --color-crema: #F4F1EB;         /* fondo claro alterno, cálido */
   --color-blanco: #FFFFFF;
-  --color-acero: #97A3B4;         /* metálico: líneas y texto secundario sobre oscuro */
+  --color-acero: #97A3B4;         /* metálico: líneas y texto secundario sobre oscuro (~6.7–7.4:1) */
   /* Fondo claro alterno "frío": mismo tono del acero muy aclarado, para
      diferenciarlo del crema (cálido) al alternar secciones institucionales
      (Nuestro Equipo) de las editoriales/cálidas (Nuestra Firma). */
@@ -32,6 +32,14 @@
   --color-dorado: #B0812F;        /* decorativo sobre claro: íconos, líneas, bordes */
   --color-dorado-texto: #9E7328;  /* texto pequeño sobre claro (~4.3:1) */
   --color-dorado-claro: #D6A75B;  /* sobre fondos oscuros (~7:1) */
+
+  /* Acero por superficie (decisión de cliente 2026-07-28, ver manual_marca.md):
+     mismo criterio que el dorado — --color-acero (arriba) solo alcanza WCAG AA
+     sobre fondo oscuro (~6.7–7.4:1); reutilizado sobre blanco caía a 2.56:1 en
+     el logo, el chevron y el pie del mega-menú. --color-acero no se toca (su
+     uso sobre oscuro sigue siendo correcto); esta es la variante para las
+     mismas 3 superficies claras que antes usaban el token equivocado. */
+  --color-acero-texto: #66778E;   /* texto/ícono pequeño sobre claro (~4.6:1) */
 
   /* Derivados de la paleta para jerarquía de texto y superficies (no son tokens nuevos) */
   --color-texto-secundario: #4E5A6B;
@@ -370,7 +378,7 @@ h1, h2, h3 {
   color: var(--color-azul-oscuro);
 }
 .logo:hover, .logo:focus-visible { color: var(--color-azul-oscuro); }
-.logo span { color: var(--color-acero); font-weight: 400; }
+.logo span { color: var(--color-acero-texto); font-weight: 400; }
 .logo-mark {
   height: 2em;
   width: auto;
@@ -419,7 +427,7 @@ h1, h2, h3 {
 
 .main-nav > a { color: var(--color-azul-oscuro); }
 .main-nav > a:hover, .main-nav > a:focus-visible { color: var(--color-azul); }
-.chevron { color: var(--color-acero); transition: transform 0.35s var(--ease-salida); }
+.chevron { color: var(--color-acero-texto); transition: transform 0.35s var(--ease-salida); }
 [aria-expanded="true"] .chevron { transform: rotate(180deg); }
 
 /* Dropdown "Quiénes Somos" */
@@ -544,7 +552,7 @@ h1, h2, h3 {
   justify-content: space-between;
   align-items: center;
 }
-.mega-menu-footer span { font-size: 13px; color: var(--color-acero); }
+.mega-menu-footer span { font-size: 13px; color: var(--color-acero-texto); }
 .mega-menu-footer a {
   font-size: 12.5px;
   letter-spacing: 0.06em;
@@ -1836,3 +1844,120 @@ a:focus-visible .stock-photo,
   transform: scale(1.06) rotate(3deg);
   box-shadow: var(--shadow-xl);
 }
+
+/* ==========================================================================
+   Testimonios (Home) — propuesta validada primero en el prototipo estático
+   (SES_ABOGADOS-sitio/prototipo) y aprobada por el cliente el 2026-07-28.
+   Reutiliza tokens y patrones ya existentes (radio-caja, shadow-sm/lg,
+   ease-salida, eyebrow, el halo de .hero::before) — no se agregó ningún
+   color, tipografía ni espaciado nuevo al sistema.
+   ========================================================================== */
+
+.testimonios {
+  position: relative;
+  overflow: hidden;
+  border-top: 3px solid var(--color-dorado);
+  background: linear-gradient(180deg, var(--color-crema) 0%, var(--color-niebla-azul) 100%);
+}
+.testimonios > * { position: relative; }
+.testimonios::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -90px;
+  width: 620px;
+  height: 638px;
+  background-image: url('../images/testimonios-balanza-decorativa.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.17;
+  pointer-events: none;
+}
+
+.testimonios-head { max-width: 640px; margin: 0 auto 48px; text-align: center; }
+.testimonios-head .eyebrow { justify-content: center; }
+.testimonios-head h2 { font-size: 28px; line-height: 1.25; }
+@media (min-width: 768px) { .testimonios-head h2 { font-size: 34px; } }
+.testimonios-intro { font-size: 15px; line-height: 1.7; color: var(--color-texto-secundario); font-weight: 300; margin: 18px 0 0; }
+
+.testimonios-carousel { display: flex; align-items: center; gap: 16px; max-width: 1280px; margin: 0 auto; }
+.testimonio-nav {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--color-placeholder-borde-claro);
+  background: var(--color-blanco);
+  color: var(--color-azul-oscuro);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.3s var(--ease-salida);
+}
+.testimonio-nav:hover, .testimonio-nav:focus-visible { border-color: var(--color-dorado); color: var(--color-dorado-texto); box-shadow: var(--shadow-sm); }
+@media (max-width: 640px) { .testimonio-nav { display: none; } }
+
+.testimonios-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 4px;
+  /* Oculta la barra de scroll nativa sin quitarle la funcionalidad: la
+     navegación real son los botones/puntos, el scroll táctil es un extra. */
+  scrollbar-width: none;
+}
+.testimonios-track::-webkit-scrollbar { display: none; }
+
+.testimonio-card {
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-blanco);
+  border: 1px solid var(--color-crema);
+  border-radius: var(--radio-caja);
+  box-shadow: var(--shadow-sm);
+  padding: 28px 26px;
+  transition: transform 0.4s var(--ease-salida), box-shadow 0.4s var(--ease-salida);
+}
+@media (min-width: 640px) { .testimonio-card { flex-basis: calc(50% - 12px); } }
+@media (min-width: 1024px) { .testimonio-card { flex-basis: calc((100% - 48px) / 3); } }
+.testimonio-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+
+.testimonio-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.testimonio-quote { font-family: var(--font-titulos); font-size: 40px; line-height: 1; color: var(--color-dorado); }
+.testimonio-rating { color: var(--color-dorado); font-size: 13px; letter-spacing: 0.1em; }
+
+.testimonio-texto { font-size: 14.5px; line-height: 1.75; color: var(--color-texto-terciario); font-weight: 300; margin: 0 0 22px; }
+
+.testimonio-autor { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+.testimonio-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-azul-oscuro);
+  color: var(--color-dorado-claro);
+  font-family: var(--font-titulos);
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+}
+.testimonio-avatar--foto img { width: 100%; height: 100%; object-fit: cover; }
+.testimonio-datos { display: flex; align-items: baseline; flex-wrap: wrap; min-width: 0; }
+.testimonio-nombre { font-size: 13px; font-weight: 600; color: var(--color-azul-oscuro); white-space: nowrap; }
+.testimonio-area { font-size: 11.5px; color: var(--color-texto-secundario); white-space: nowrap; }
+.testimonio-area::before { content: '\00b7'; margin: 0 5px; color: var(--color-placeholder-borde-claro); }
+
+.testimonios-dots { display: flex; justify-content: center; gap: 10px; margin-top: 32px; }
+.testimonio-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: var(--color-placeholder-borde-claro);
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s var(--ease-salida);
+}
+.testimonio-dot:hover, .testimonio-dot:focus-visible { background: var(--color-dorado-claro); }
+.testimonio-dot.is-active { background: var(--color-dorado); transform: scale(1.25); }

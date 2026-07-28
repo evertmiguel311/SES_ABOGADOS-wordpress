@@ -25,6 +25,7 @@ $ses_inc_files = array(
 	'inc/setup.php',            // Soporte de tema, menús, tamaños de imagen, textdomain.
 	'inc/enqueue.php',          // Carga de CSS/JS del tema.
 	'inc/cpt-team-member.php',  // CPT ses_team_member — docs/wordpress.md §1.1.
+	'inc/cpt-testimonios.php',  // CPT ses_testimonio — sección Testimonios del Home.
 	'inc/taxonomies.php',       // Relabeling de category/post_tag — docs/wordpress.md §2.
 	'inc/widgets.php',          // Área de widget sidebar-articulo — docs/wordpress.md §5.
 	'inc/acf-options.php',      // Options Pages de ACF — docs/wordpress.md §6.
