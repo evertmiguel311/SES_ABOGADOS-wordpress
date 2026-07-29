@@ -9,10 +9,11 @@
  * (template-parts/components/navbar.php, dropdown-quienes-somos.php,
  * mega-menu.php) — docs/roadmap.md Sprint 4.
  *
- * La franja de aviso (ciudad/correo) se hardcodea con el dato ya
- * confirmado por el cliente (CLAUDE.md §1); pasa a leerse de la Options
- * Page "Datos de contacto" (docs/wordpress.md §6) cuando se construya
- * Contacto (Sprint 8) — un solo lugar para ese dato, no duplicado.
+ * La franja de aviso (ciudad/correo) lee de ses_get_contact_data()
+ * (inc/template-tags.php), fuente única compartida con footer-content.php
+ * — pasa a leerse de la Options Page "Datos de contacto"
+ * (docs/wordpress.md §6) cuando se construya Contacto (Sprint 8), sin
+ * tocar este archivo.
  *
  * @package SES_Abogados
  */
@@ -41,10 +42,11 @@ defined( 'ABSPATH' ) || exit;
 
 <?php get_template_part( 'template-parts/components/skip-link' ); ?>
 
+<?php $ses_contact = ses_get_contact_data(); ?>
 <div class="announcement-bar">
-	<span><?php esc_html_e( 'Cartagena, Colombia', 'ses-abogados' ); ?></span>
+	<span><?php echo esc_html( $ses_contact['city'] ); ?></span>
 	<span class="announcement-extra">
-		<span><?php echo esc_html( 'sierraellesabogados@gmail.com' ); ?></span>
+		<span><?php echo esc_html( $ses_contact['email'] ); ?></span>
 	</span>
 </div>
 

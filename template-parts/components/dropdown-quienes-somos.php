@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 $ses_quienes_somos_url = home_url( '/quienes-somos/' );
 ?>
 <div class="dropdown">
-	<button type="button" class="dropdown-trigger" aria-expanded="false" aria-controls="quienes-somos-panel">
+	<button type="button" class="dropdown-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="quienes-somos-panel">
 		<?php esc_html_e( 'Quiénes Somos', 'ses-abogados' ); ?>
 		<svg class="chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.3"/></svg>
 	</button>

@@ -102,6 +102,52 @@
 		} );
 	}
 
+	/**
+	 * Accordion — navegación móvil del Mega Menú (docs/componentes.md,
+	 * DA-004). No reutiliza openPanel/closePanel: esas dos están pensadas
+	 * para paneles superpuestos que se ocultan con `hidden` tras un
+	 * retraso (CLOSE_ANIMATION_MS) mientras se desvanecen con
+	 * opacity/transform. El Accordion anima `grid-template-rows`
+	 * (docs/design_system.md §11.2), así que el panel permanece siempre
+	 * en el flujo — no usa `hidden` — y en su lugar alterna `inert` para
+	 * que sus enlaces no sean alcanzables por teclado/lector de pantalla
+	 * mientras está colapsado.
+	 */
+	function setupAccordion( accordionEl ) {
+		if ( ! accordionEl ) return;
+
+		var allowMultiple = accordionEl.getAttribute( 'data-allow-multiple' ) === 'true';
+		var triggers = Array.prototype.slice.call( accordionEl.querySelectorAll( '.accordion-trigger' ) );
+
+		function setItemState( trigger, expand ) {
+			var panel = document.getElementById( trigger.getAttribute( 'aria-controls' ) );
+			if ( ! panel ) return;
+
+			trigger.setAttribute( 'aria-expanded', expand ? 'true' : 'false' );
+			panel.classList.toggle( 'is-open', expand );
+
+			if ( expand ) {
+				panel.removeAttribute( 'inert' );
+			} else {
+				panel.setAttribute( 'inert', '' );
+			}
+		}
+
+		triggers.forEach( function ( trigger ) {
+			trigger.addEventListener( 'click', function () {
+				var isExpanded = trigger.getAttribute( 'aria-expanded' ) === 'true';
+
+				if ( ! allowMultiple && ! isExpanded ) {
+					triggers.forEach( function ( other ) {
+						if ( other !== trigger ) setItemState( other, false );
+					} );
+				}
+
+				setItemState( trigger, ! isExpanded );
+			} );
+		} );
+	}
+
 	document.addEventListener( 'DOMContentLoaded', function () {
 		// Dropdown "Quiénes Somos"
 		setupToggleMenu(
@@ -116,6 +162,9 @@
 			document.getElementById( 'areas-mega-menu' ),
 			document.querySelector( '.mega-menu-wrap' )
 		);
+
+		// Accordion (representación móvil del Mega Menú dentro del off-canvas)
+		document.querySelectorAll( '.accordion' ).forEach( setupAccordion );
 
 		// Menú móvil (hamburguesa)
 		var mobileToggle = document.querySelector( '.mobile-menu-toggle' );

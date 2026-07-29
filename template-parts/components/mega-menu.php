@@ -26,7 +26,7 @@ $ses_areas_base       = home_url( '/areas-de-practica' );
 $ses_mega_menu_groups = ses_get_grupos_practica();
 ?>
 <div class="mega-menu-wrap">
-	<button type="button" class="mega-trigger" aria-expanded="false" aria-controls="areas-mega-menu">
+	<button type="button" class="mega-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="areas-mega-menu">
 		<?php esc_html_e( 'Áreas de Práctica', 'ses-abogados' ); ?>
 		<svg class="chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.3"/></svg>
 	</button>

@@ -458,19 +458,6 @@ h1, h2, h3 {
 
 /* Dropdown "Quiénes Somos" */
 .dropdown { position: relative; }
-.dropdown-trigger {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--color-azul-oscuro);
-  cursor: pointer;
-  background: none;
-  border: none;
-  font: inherit;
-  letter-spacing: inherit;
-  padding: 0;
-}
-.dropdown-trigger:hover, .dropdown-trigger:focus-visible { color: var(--color-azul); }
 .dropdown-panel {
   position: absolute;
   top: calc(100% + 10px);
@@ -486,7 +473,7 @@ h1, h2, h3 {
   z-index: 40;
   opacity: 0;
   transform: translateY(-8px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity var(--transition-fast) var(--ease-suave), transform var(--transition-fast) var(--ease-salida);
 }
 .dropdown-panel.is-open { opacity: 1; transform: translateY(0); }
 .dropdown-panel a {
@@ -497,8 +484,13 @@ h1, h2, h3 {
 }
 .dropdown-panel a:hover, .dropdown-panel a:focus-visible { color: var(--color-azul); }
 
-/* Mega menu "Áreas de Práctica" */
-.mega-menu-wrap { position: relative; }
+/* Trigger de disclosure compartido por Dropdown y Mega Menu — mismo bloque
+   base (antes duplicado literal en .dropdown-trigger y .mega-trigger), con
+   sus estados de color en reposo/hover/foco/expandido, que sí difieren
+   entre ambos (mega-trigger también cambia de color con
+   aria-expanded="true"; dropdown-trigger no), por lo que se mantienen
+   separados. */
+.dropdown-trigger,
 .mega-trigger {
   display: flex;
   align-items: center;
@@ -511,6 +503,10 @@ h1, h2, h3 {
   letter-spacing: inherit;
   padding: 0;
 }
+.dropdown-trigger:hover, .dropdown-trigger:focus-visible { color: var(--color-azul); }
+
+/* Mega menu "Áreas de Práctica" */
+.mega-menu-wrap { position: relative; }
 .mega-trigger[aria-expanded="true"],
 .mega-trigger:hover,
 .mega-trigger:focus-visible {
@@ -526,7 +522,7 @@ h1, h2, h3 {
   z-index: 40;
   opacity: 0;
   transform: translate(-50%, -8px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity var(--transition-fast) var(--ease-suave), transform var(--transition-fast) var(--ease-salida);
 }
 .mega-menu.is-open { opacity: 1; transform: translate(-50%, 0); }
 .mega-menu-inner {
@@ -543,7 +539,7 @@ h1, h2, h3 {
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
 }
-.mega-icon { width: 32px; height: 32px; margin-bottom: 18px; color: var(--color-dorado); transition: transform 0.45s var(--ease-salida); }
+.mega-icon { width: 32px; height: 32px; margin-bottom: 18px; color: var(--color-dorado); transition: transform var(--transition-slow) var(--ease-salida); }
 .mega-col:hover .mega-icon { transform: translateY(-3px) scale(1.06); }
 .mega-col-title {
   font-family: var(--font-titulos);
@@ -644,6 +640,48 @@ h1, h2, h3 {
 @media (min-width: 1024px) {
   .mobile-menu { display: none !important; }
 }
+
+/* Accordion — navegación móvil del Mega Menú (DA-004, docs/componentes.md;
+   docs/biblioteca_componentes.md §6). El contenido interno reutiliza
+   .mega-col-links/.mega-col-cta ya definidos arriba (mismo lenguaje visual
+   que el Mega Menú de escritorio, mismo dato). El panel anima
+   grid-template-rows en vez de max-height (docs/design_system.md §11.2,
+   fila Accordion: "no height:auto abrupto"). */
+.accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  color: var(--color-azul-oscuro);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-crema);
+  padding: 14px 0;
+  text-align: left;
+}
+.accordion-trigger:hover, .accordion-trigger:focus-visible { color: var(--color-azul); }
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-base) var(--ease-salida);
+}
+.accordion-panel.is-open { grid-template-rows: 1fr; }
+.accordion-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+  padding: var(--space-2) 0 var(--space-4);
+}
+/* .mega-col-links a y .mega-col-cta viven aquí dentro de .mobile-menu, y
+   .mobile-menu a (misma o mayor especificidad, declarada después) les
+   pisaba color/font-size/padding/border-bottom. Se reafirman únicamente
+   esas propiedades, calificadas con .accordion, para ganar la cascada sin
+   tocar .mobile-menu a ni los 5 enlaces planos del off-canvas. */
+.accordion .mega-col-links a { color: var(--color-texto-secundario); font-size: 13.5px; padding: 0; border-bottom: none; }
+.accordion .mega-col-cta { font-size: 12px; border-bottom-color: var(--color-azul-oscuro); padding: 0 0 3px; }
 
 /* ==========================================================================
    Hero

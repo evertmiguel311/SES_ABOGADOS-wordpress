@@ -9,23 +9,25 @@
  *
  * NOTA (misma justificación que mega-menu.php): docs/wordpress.md §4
  * registra `menu-footer-nav` y `menu-footer-areas` como ubicaciones de
- * menú nativas de WordPress. Aquí se hardcodean en su lugar porque el
- * marcado del diseño aprobado es una lista plana de <a> sin <li>
- * (`.footer-links a`), y el walker por defecto de `wp_nav_menu()` siempre
- * envuelve cada ítem en <li> — usar el menú nativo tal cual introduciría
- * una diferencia visual (viñetas/indentado) que no está en el diseño. Las
- * ubicaciones de menú quedan registradas para el día que se justifique un
- * Walker propio; mientras tanto, este es el único lugar que hay que tocar
- * si cambia el contenido, no header.php ni footer.php.
+ * menú nativas de WordPress. Aquí se hardcodean en su lugar porque cada
+ * columna es una `<ul>`/`<li>` con reset propio (`.grid-list-reset`,
+ * mismo patrón que Grid de tarjetas, docs/biblioteca_componentes.md §1) y
+ * el walker por defecto de `wp_nav_menu()` no produce ese marcado exacto
+ * — usarlo tal cual introduciría una diferencia visual (viñetas/indentado
+ * sin resetear) que no está en el diseño. Las ubicaciones de menú quedan
+ * registradas para el día que se justifique un Walker propio; mientras
+ * tanto, este es el único lugar que hay que tocar si cambia el contenido,
+ * no header.php ni footer.php.
  *
  * Los 4 grupos de práctica vienen de `ses_get_grupos_practica()`
  * (inc/template-tags.php), la misma fuente que usa mega-menu.php —
  * evita mantener dos arrays con las mismas etiquetas/URLs.
  *
- * El correo/ciudad de la columna "Contacto" se hardcodea con el dato ya
- * confirmado por el cliente (CLAUDE.md §1); pasa a leerse de la Options
- * Page "Datos de contacto" (docs/wordpress.md §6) cuando se construya
- * Contacto (Sprint 8).
+ * El correo/ciudad de la columna "Contacto" viene de
+ * `ses_get_contact_data()` (inc/template-tags.php), la misma fuente que
+ * usa header.php — pasa a leerse de la Options Page "Datos de contacto"
+ * (docs/wordpress.md §6) cuando se construya Contacto (Sprint 8), sin
+ * tocar este archivo.
  *
  * @package SES_Abogados
  */
@@ -34,6 +36,7 @@ defined( 'ABSPATH' ) || exit;
 
 $ses_quienes_somos = home_url( '/quienes-somos/' );
 $ses_footer_grupos = ses_get_grupos_practica();
+$ses_contact       = ses_get_contact_data();
 ?>
 <footer class="site-footer">
 	<div class="footer-inner">
@@ -49,28 +52,28 @@ $ses_footer_grupos = ses_get_grupos_practica();
 			</div>
 
 			<div>
-				<div class="footer-col-title"><?php esc_html_e( 'Firma', 'ses-abogados' ); ?></div>
-				<div class="footer-links">
-					<a href="<?php echo esc_url( $ses_quienes_somos . '#firma' ); ?>"><?php esc_html_e( 'Nuestra Firma', 'ses-abogados' ); ?></a>
-					<a href="<?php echo esc_url( $ses_quienes_somos . '#equipo' ); ?>"><?php esc_html_e( 'Nuestro Equipo', 'ses-abogados' ); ?></a>
-					<a href="<?php echo esc_url( home_url( '/actualidad-juridica/' ) ); ?>"><?php esc_html_e( 'Actualidad Jurídica', 'ses-abogados' ); ?></a>
-				</div>
+				<h3 class="footer-col-title"><?php esc_html_e( 'Firma', 'ses-abogados' ); ?></h3>
+				<ul class="footer-links grid-list-reset">
+					<li><a href="<?php echo esc_url( $ses_quienes_somos . '#firma' ); ?>"><?php esc_html_e( 'Nuestra Firma', 'ses-abogados' ); ?></a></li>
+					<li><a href="<?php echo esc_url( $ses_quienes_somos . '#equipo' ); ?>"><?php esc_html_e( 'Nuestro Equipo', 'ses-abogados' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/actualidad-juridica/' ) ); ?>"><?php esc_html_e( 'Actualidad Jurídica', 'ses-abogados' ); ?></a></li>
+				</ul>
 			</div>
 
 			<div>
-				<div class="footer-col-title"><?php esc_html_e( 'Áreas de Práctica', 'ses-abogados' ); ?></div>
-				<div class="footer-links">
+				<h3 class="footer-col-title"><?php esc_html_e( 'Áreas de Práctica', 'ses-abogados' ); ?></h3>
+				<ul class="footer-links grid-list-reset">
 					<?php foreach ( $ses_footer_grupos as $ses_grupo ) : ?>
-						<a href="<?php echo esc_url( $ses_grupo['url'] ); ?>"><?php echo esc_html( $ses_grupo['short'] ); ?></a>
+						<li><a href="<?php echo esc_url( $ses_grupo['url'] ); ?>"><?php echo esc_html( $ses_grupo['short'] ); ?></a></li>
 					<?php endforeach; ?>
-				</div>
+				</ul>
 			</div>
 
 			<div>
-				<div class="footer-col-title"><?php esc_html_e( 'Contacto', 'ses-abogados' ); ?></div>
+				<h3 class="footer-col-title"><?php esc_html_e( 'Contacto', 'ses-abogados' ); ?></h3>
 				<div class="footer-links footer-contact-info">
-					<span><?php esc_html_e( 'Cartagena, Colombia', 'ses-abogados' ); ?></span>
-					<span><?php echo esc_html( 'sierraellesabogados@gmail.com' ); ?></span>
+					<span><?php echo esc_html( $ses_contact['city'] ); ?></span>
+					<span><?php echo esc_html( $ses_contact['email'] ); ?></span>
 				</div>
 			</div>
 		</div>

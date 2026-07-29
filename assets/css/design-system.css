@@ -105,10 +105,14 @@
        (mover/escalar/rotar): con desaceleración marcada al final, la
        única curva para movimiento.
    Ninguna otra curva (ease, linear, ease-in-out genérico) es parte del
-   sistema. Los usos sueltos de "ease" sin variable que quedan en
-   style.css (paneles de dropdown/mega-menu y algunos hover del
-   prototipo) son deuda heredada, no un tercer estándar — no se tocan por
-   ser componentes ya aprobados, pero no se replican en código nuevo.
+   sistema. Los paneles de dropdown/mega-menu (style.css) ya migraron a
+   --transition-fast/--ease-suave/--ease-salida (Sprint 4, Bloque 4.3) — no
+   quedan como deuda. Los usos sueltos de "ease"/duración literal que sí
+   quedan (algunos hover puntuales del prototipo, ej. .chevron y el
+   underline de .main-nav/.nav-cta, ambos en 0.35s sin equivalente exacto
+   en esta escala) son deuda heredada, no un tercer estándar — no se tocan
+   por ser componentes ya aprobados con un tiempo propio, pero no se
+   replican en código nuevo.
    ========================================================================== */
 
 /* ==========================================================================
