@@ -1589,6 +1589,24 @@ a:focus-visible .stock-photo,
 .breadcrumb-groups a { color: var(--color-acero); }
 .breadcrumb-groups a:hover, .breadcrumb-groups a:focus-visible { color: var(--color-dorado-claro); }
 
+/* Reset de <nav><ol> para Breadcrumb (docs/biblioteca_componentes.md
+   §2, breadcrumb.php) — mismo texto plano en línea del prototipo
+   aprobado, ahora sobre una lista semántica en vez de un <div>. Cero
+   cambio visible: solo anula viñeta/margen/padding e inline-ea los
+   <li> igual que el flujo de texto original. Compartido con
+   .article-breadcrumb (ver abajo). */
+.breadcrumb-groups ol,
+.article-breadcrumb ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+.breadcrumb-groups li,
+.article-breadcrumb li {
+  display: inline;
+}
+
 /* ==========================================================================
    Blog (listado) y artículo
    ========================================================================== */

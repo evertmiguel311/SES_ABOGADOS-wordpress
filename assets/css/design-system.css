@@ -141,6 +141,18 @@
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
 
+/* Grid de tarjetas (docs/biblioteca_componentes.md §1, card-grid.php) —
+   reset puramente visual para usar las clases de grid ya existentes
+   (.areas-grid, .blog-grid, .equipo-grid, etc., todas sin tocar) sobre
+   un <ul> en vez de un <div>: anula viñeta/margen/padding por defecto
+   del navegador, cero cambio de layout/color/espaciado. */
+.grid-list-reset,
+.grid-list-reset > li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 @media (max-width: 1023px) {
   .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
 }
