@@ -1,0 +1,83 @@
+{
+    "key": "group_ses_hero_pagina",
+    "title": "Hero de página",
+    "fields": [
+        {
+            "key": "field_ses_hero_eyebrow",
+            "label": "Antetítulo (eyebrow)",
+            "name": "eyebrow",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ses_hero_titulo",
+            "label": "Título (H1)",
+            "name": "titulo",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ses_hero_subtitulo",
+            "label": "Subtítulo",
+            "name": "subtitulo",
+            "type": "textarea",
+            "rows": 3,
+            "required": 0
+        },
+        {
+            "key": "field_ses_hero_imagen_fondo",
+            "label": "Imagen del Hero",
+            "name": "imagen_fondo",
+            "type": "image",
+            "instructions": "Reemplaza la fotografía de stock temporal cuando exista una imagen real de la firma.",
+            "return_format": "url",
+            "preview_size": "medium",
+            "required": 0
+        },
+        {
+            "key": "field_ses_hero_cta_primario_label",
+            "label": "CTA principal — texto",
+            "name": "cta_primario_label",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ses_hero_cta_primario_url",
+            "label": "CTA principal — enlace",
+            "name": "cta_primario_url",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ses_hero_cta_secundario_label",
+            "label": "CTA secundario — texto",
+            "name": "cta_secundario_label",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ses_hero_cta_secundario_url",
+            "label": "CTA secundario — enlace",
+            "name": "cta_secundario_url",
+            "type": "text",
+            "required": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_type",
+                "operator": "==",
+                "value": "front_page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "docs/wordpress.md §3. Todo campo vacío usa el contenido ya aprobado del prototipo (ses_get_hero_args(), inc/template-tags.php) — no hace falta llenar nada para que Inicio siga funcionando. Alcance de este grupo limitado a la portada (page_type == front_page): es la única ubicación que ACF puede localizar de forma confiable sin depender de una plantilla asignada manualmente (docs/wordpress.md §10, page-quienes-somos.php/page-areas-de-practica.php/page-contacto.php se resuelven por slug automático, no por selección manual de plantilla)."
+}

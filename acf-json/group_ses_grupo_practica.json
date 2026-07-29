@@ -1,0 +1,59 @@
+{
+    "key": "group_ses_grupo_practica",
+    "title": "Grupo de práctica — contenido",
+    "fields": [
+        {
+            "key": "field_ses_descripcion_grupo",
+            "label": "Descripción del grupo",
+            "name": "descripcion_grupo",
+            "type": "textarea",
+            "instructions": "Opcional. Si se deja vacío, la página usa el texto ya aprobado de ses_get_grupos_practica() (inc/template-tags.php) — no hace falta llenarlo para que la página funcione.",
+            "rows": 3,
+            "required": 0
+        },
+        {
+            "key": "field_ses_sub_especialidades",
+            "label": "Sub-especialidades — contenido extendido",
+            "name": "sub_especialidades",
+            "type": "repeater",
+            "instructions": "El título y el ancla de cada sub-especialidad ya están fijados en ses_get_grupos_practica() (mismo dato que el Mega Menú) — aquí solo se agrega la descripción larga de esa sección anclada. \"ID de ancla\" debe copiarse exacto del Mega Menú (ej. \"administrativo\", \"corporativo-mercantil\") para que la descripción caiga en la sección correcta; si no coincide con ningún ancla conocido, esa fila no se usa.",
+            "layout": "table",
+            "button_label": "Agregar sub-especialidad",
+            "sub_fields": [
+                {
+                    "key": "field_ses_sub_ancla_id",
+                    "label": "ID de ancla",
+                    "name": "ancla_id",
+                    "type": "text",
+                    "required": 1
+                },
+                {
+                    "key": "field_ses_sub_descripcion",
+                    "label": "Descripción",
+                    "name": "descripcion",
+                    "type": "textarea",
+                    "instructions": "Opcional. Si se deja vacío, se muestra la descripción ya aprobada del prototipo para esta sub-especialidad (ses_get_grupos_practica()['links'][x]['description'], inc/template-tags.php) — la página nunca queda sin descripción.",
+                    "rows": 3,
+                    "required": 0
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-grupo-practica.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "docs/wordpress.md §3, una sola plantilla (page-grupo-practica.php) para las 4 páginas de grupo. No repite título/ancla ya definidos en ses_get_grupos_practica() (evita una segunda fuente de datos) — solo aporta la descripción extendida por sub-especialidad. Fuente de verdad (Sprint 6.1): si esta fila (por 'ancla_id') está vacía o no existe, page-grupo-practica.php usa como respaldo el texto ya aprobado en ses_get_grupos_practica()['links'][x]['description'] (inc/template-tags.php), tomado literalmente del prototipo (SES_ABOGADOS-sitio/prototipo/areas-de-practica/{grupo}.html .subarea-card) — el sitio nunca queda incompleto por falta de configuración inicial."
+}

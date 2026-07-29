@@ -1,0 +1,58 @@
+{
+    "key": "group_ses_cifras_institucionales",
+    "title": "Cifras institucionales",
+    "fields": [
+        {
+            "key": "field_ses_mostrar_cifras",
+            "label": "Mostrar cifras en Inicio",
+            "name": "mostrar_cifras",
+            "type": "true_false",
+            "instructions": "Apagar hasta confirmar con el cliente que las cifras son correctas para publicarse como dato definitivo (CLAUDE.md §15). Mientras no se edite este panel, el sitio muestra las cifras sugeridas del prototipo aprobado.",
+            "default_value": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_ses_cifras",
+            "label": "Cifras",
+            "name": "cifras",
+            "type": "repeater",
+            "instructions": "Una fila por cifra del Hero de Inicio (Stat Tile). Vacío = se usan las cifras sugeridas del prototipo mientras tanto.",
+            "layout": "table",
+            "button_label": "Agregar cifra",
+            "sub_fields": [
+                {
+                    "key": "field_ses_cifra_valor",
+                    "label": "Valor",
+                    "name": "valor",
+                    "type": "text",
+                    "instructions": "Texto, no solo número (permite \"35+\" o \"Nacional\").",
+                    "required": 1
+                },
+                {
+                    "key": "field_ses_cifra_etiqueta",
+                    "label": "Etiqueta",
+                    "name": "etiqueta",
+                    "type": "text",
+                    "required": 1
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "ses-opciones-cifras"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "docs/wordpress.md §3/§6, Options Page \"Cifras institucionales\" (inc/acf-options.php). Fuente de Stat Tile en el Hero de Inicio vía ses_get_cifras_institucionales() (inc/template-tags.php)."
+}

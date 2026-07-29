@@ -1,0 +1,65 @@
+{
+    "key": "group_ses_ficha_socio",
+    "title": "Ficha de socio",
+    "fields": [
+        {
+            "key": "field_ses_cargo",
+            "label": "Cargo",
+            "name": "cargo",
+            "type": "text",
+            "instructions": "Ej. \"Socio Fundador\", \"Director Jurídico y Socio Fundador\".",
+            "required": 1
+        },
+        {
+            "key": "field_ses_especializacion",
+            "label": "Especialización",
+            "name": "especializacion",
+            "type": "text",
+            "instructions": "Ej. \"Derecho Administrativo\". Se muestra en la tarjeta compacta (Home).",
+            "required": 1
+        },
+        {
+            "key": "field_ses_bio_breve",
+            "label": "Biografía breve",
+            "name": "bio_breve",
+            "type": "textarea",
+            "instructions": "Reseña corta usada en la tarjeta completa de Nuestro Equipo (2-4 líneas). La biografía extendida, si se necesita, va en el contenido principal de esta entrada.",
+            "rows": 4,
+            "required": 1
+        },
+        {
+            "key": "field_ses_orden",
+            "label": "Orden de aparición",
+            "name": "orden",
+            "type": "number",
+            "instructions": "Controla el orden en Nuestro Equipo sin depender de la fecha de creación (1 = primero).",
+            "default_value": 1,
+            "required": 0
+        },
+        {
+            "key": "field_ses_t_p",
+            "label": "Tarjeta profesional (T.P.)",
+            "name": "t_p",
+            "type": "text",
+            "instructions": "Ej. \"T.P. 198833 del C.S. de la J.\". Opcional.",
+            "required": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "ses_team_member"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Campos de negocio de Team Card (docs/wordpress.md §3, docs/biblioteca_componentes.md §4). La bio extendida usa el editor nativo de la entrada (post_content), no un campo ACF adicional, para no duplicar el mismo dato en dos lugares."
+}
